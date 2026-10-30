@@ -1,0 +1,9 @@
+{
+    "os": "Windows",
+    "kernel": "11",
+    "python_version": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+    "cpu_model": "Intel64 Family 6 Model 141 Stepping 1, GenuineIntel",
+    "physical_cores": 12,
+    "logical_cores": 12,
+    "cache_line_size_bytes": 64
+}
