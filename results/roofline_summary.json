@@ -1,0 +1,7 @@
+{
+    "N": 1536,
+    "FLOPs": 11765780,
+    "Bytes_Transferred": 37748736,
+    "Arithmetic_Intensity_FLOP_per_Byte": 0.31168672773573136,
+    "Regime": "Memory-Bandwidth Bound"
+}

@@ -4,27 +4,30 @@ import multiprocessing as mp
 import numpy as np
 
 def stencil_chunk(args):
-    data, start_row, end_row = args
-    res = np.copy(data[start_row:end_row, :])
-    # 5-точечный 2D stencil update: 5 FLOPs на элемент
-    res[1:-1, 1:-1] = 0.2 * (data[start_row+1:end_row+1, 1:-1] + 
-                             data[start_row-1:end_row-1, 1:-1] + 
-                             data[start_row:end_row, 2:] + 
-                             data[start_row:end_row, :-2] + 
-                             data[start_row:end_row, 1:-1])
+    data, r_start, r_end = args
+    # 5-точечный stencil update с корректным сопоставлением границ
+    res = 0.2 * (
+        data[r_start-1:r_end-1, 1:-1] +  # Верхние соседи
+        data[r_start+1:r_end+1, 1:-1] +  # Нижние соседи
+        data[r_start:r_end, :-2] +       # Левые соседи
+        data[r_start:r_end, 2:] +        # Правые соседи
+        data[r_start:r_end, 1:-1]        # Центр
+    )
     return res
 
 def run_strong_scaling(N, max_cores):
     grid = np.ones((N, N), dtype=np.float64)
     runtimes = {}
     
+    internal_rows = N - 2
+    
     for P in range(1, max_cores + 1):
         print(f" -> Тестирование Strong Scaling на P = {P} ядрах...")
-        chunk_size = N // P
+        chunk_size = internal_rows // P
         args = []
         for p in range(P):
-            r_start = p * chunk_size
-            r_end = (p + 1) * chunk_size if p != P - 1 else N
+            r_start = 1 + p * chunk_size
+            r_end = 1 + (p + 1) * chunk_size if p != P - 1 else N - 1
             args.append((grid, r_start, r_end))
         
         t0 = time.perf_counter()
@@ -56,8 +59,6 @@ def main():
             f.write(f"{P}\t{TP:.6f}\t{Sp:.4f}\t{Ep:.2f}%\t{s:.6f}\n")
 
     # 2. Arithmetic Intensity & Roofline Calculation
-    # Stencil: 5 FLOPs на внутреннюю ячейку
-    # Передача памяти: ~ 2 * 8 bytes (чтение + запись) = 16 bytes per element
     flops = 5 * (N - 2) * (N - 2)
     bytes_transferred = 16 * N * N
     arithmetic_intensity = flops / bytes_transferred
