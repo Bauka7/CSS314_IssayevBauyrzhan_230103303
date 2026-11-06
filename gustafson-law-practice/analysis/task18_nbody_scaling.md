@@ -1,0 +1,7 @@
+# Task 18. Direct N-body versus Barnes-Hut
+
+For direct all-pairs force evaluation, balanced compute time is c*N^2/P. Fixed compute time requires N=N0*sqrt(P). For Barnes-Hut at fixed accuracy and roughly balanced distributions, work is c*N*ln(N); hence N*ln N=P*N0*ln N0. If A=P*N0*ln N0, then N=exp(LambertW(A))=A/LambertW(A), asymptotically Theta(P/log P). Linear particle growth would increase direct time as P and tree-code time roughly as log P, so neither follows fixed compute time under N~P.
+
+The serial/parallel ratio cannot be inferred from computational complexity alone. If serial preprocessing is a fixed constant a and parallel compute time is b, alpha=a/(a+b) stays constant. If direct code serially initializes N particles at cost dN, then a(P)=Theta(sqrt(P)) and alpha=a(P)/(a(P)+b) approaches 1. In a tree code, serial tree construction can cost Theta(N log N), which grows proportionally to P under the compute-time schedule; its serial fraction likewise approaches 1 unless distributed.
+
+For example, a single-rank gather of particle outputs grows with N in either method and eventually breaks fixed runtime. Parallel tree building, spatial decomposition and reduced output frequency can alter this conclusion. Barnes-Hut additionally suffers from nonuniform tree depth and load imbalance; its O(N log N) average assumption is not an unconditional worst-case guarantee. A fixed error tolerance must be held while comparing algorithms; otherwise changes in approximation contaminate scaling claims.
