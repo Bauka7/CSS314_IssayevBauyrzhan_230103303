@@ -78,9 +78,9 @@ Supporting artifacts: [requirements](requirements.txt) and [submission verifier]
 
 ## Experimental finding
 
-The real dataset contains 60 trials: P=1..12 and five independent process-pool launches per count, on a 6-core/12-thread i5-11400H. For k=500000 samples per process, mean scaled speedup is .2051 at P=1 and 1.0043 at P=12. The highest measured mean is 1.1629 at P=11. End-to-end timing includes interpreter/process startup; this short scalar Python workload does not deliver ideal weak scaling.
+The latest real dataset contains 60 trials: P=1..12 and five independent process-pool launches per count, on a 6-core/12-thread i5-11400H. For k=500000 samples per process, mean scaled speedup is .2208 at P=1 and 1.3342 at P=12. The highest measured mean is 1.3948 at P=11. End-to-end timing includes interpreter/process startup; this short scalar Python workload does not deliver ideal weak scaling.
 
-Unconstrained least squares gives alpha=1.0056894651. Constraining alpha to [0,1] gives 1, with RMSE=.3455265353 and R^2=-.5377054902. These are documented model failures, not evidence that every instruction in the program is serial. Retaining the negative result is necessary for a meaningful empirical comparison. The coinciding fitted Amdahl and Gustafson lines at alpha=1 are shown with distinct line styles in the plot. Thermal and NUMA explanations remain unverified because those counters were not measured.
+Unconstrained least squares gives alpha=.9724203696, also the optimum constrained to [0,1], with RMSE=.3252854394 and R^2=.2321441322. The weak fit and large low-P residuals show the limits of the model here; alpha is an effective penalty, not the measured fraction of serial instructions. The fitted Amdahl and Gustafson lines use distinct line styles in the plot. Thermal and NUMA explanations remain unverified because those counters were not measured. Documentation numbers describe the latest repeated experiment and may change after another benchmark run.
 
 ![Measured weak scaling with standard errors and theoretical comparisons](plots/scaling_comparison.png)
 

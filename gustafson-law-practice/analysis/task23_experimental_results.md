@@ -6,21 +6,21 @@ For run i, S_i=T_serial_i(W(P))/T_parallel_i(W(P)). For each configuration repor
 
 | P | Mean parallel seconds | Sample SD seconds | Mean S | SE(S) |
 |---:|---:|---:|---:|---:|
-|1|0.324336|0.012699|0.205099|0.007264|
-|2|0.345305|0.033980|0.373998|0.015489|
-|3|0.373148|0.053270|0.531833|0.035290|
-|4|0.523351|0.340527|0.658810|0.068512|
-|5|0.414420|0.038656|0.831445|0.050080|
-|6|0.449827|0.044582|0.888287|0.025793|
-|7|0.492265|0.068242|0.929017|0.040444|
-|8|0.590067|0.127124|0.985087|0.028399|
-|9|0.691768|0.329650|1.002380|0.107350|
-|10|0.707100|0.086429|0.974968|0.031678|
-|11|0.650723|0.053309|1.162858|0.074193|
-|12|0.809688|0.087757|1.004344|0.051276|
+|1|0.278660|0.008604|0.220770|0.002926|
+|2|0.293764|0.013754|0.420676|0.009039|
+|3|0.286987|0.014689|0.641389|0.014885|
+|4|0.315726|0.039911|0.814819|0.021488|
+|5|0.318855|0.030366|0.995059|0.056205|
+|6|0.355237|0.042602|1.071814|0.051121|
+|7|0.379592|0.019283|1.150017|0.033546|
+|8|0.412971|0.031480|1.197251|0.040782|
+|9|0.434255|0.032476|1.279881|0.040521|
+|10|0.455341|0.008387|1.369425|0.012745|
+|11|0.490982|0.034704|1.394750|0.025457|
+|12|0.579338|0.093547|1.334167|0.090959|
 
 Fit S_j=P_j-alpha*(P_j-1) by minimizing sum_j (S_j-P_j+alpha*(P_j-1))^2 over configuration means. Differentiating gives alpha_hat=sum_j[(P_j-1)(P_j-S_j)]/sum_j[(P_j-1)^2]. Equal sample counts justify equal configuration weighting; heteroscedastic errors remain a limitation. P=1 contributes a residual but no information to the slope estimate.
 
-Unconstrained OLS gives alpha_hat=1.0056894651. This is outside [0,1]; projecting to that interval gives alpha_observed=1.0000000000, the constrained least-squares optimum. Constrained RMSE=0.3455265353 and R^2=-0.5377054902. The JSON retains both estimates and every residual. A negative R^2 means the constrained law predicts these means worse than a constant fitted to their average. It is evidence against this one-parameter model here, not a measurement of literally 100% serial application code.
+The latest repeated experiment gives unconstrained OLS alpha_hat=0.9724203696. It lies within [0,1], so the bounded estimate is identical. RMSE=0.3252854394 and R^2=0.2321441322. The JSON retains both estimates and every residual. The low R^2 and large low-P residuals indicate a poor one-parameter fit. This effective penalty is not a direct measurement that 97.24% of application code is serial. Runtime variation between experiments is expected; this table and the current CSV describe the latest run.
 
-At P=1, ideal Gustafson demands S=1, whereas a spawned worker has startup cost absent from the direct serial reference. At higher P the pools also grow more expensive. These implementation costs violate the law's assumptions. The observed maximum mean S=1.162858 at P=11 is modest; it does not establish an optimum beyond the measured five-run uncertainty. Error bars show one SE, not a 95% confidence interval. Benchmark repetitions use newly created pools but are not guaranteed independent of host thermal or scheduler state.
+At P=1, ideal Gustafson demands S=1, whereas a spawned worker has startup cost absent from the direct serial reference. At higher P the pools also grow more expensive. These implementation costs violate the law's assumptions. The observed maximum mean S=1.394750 at P=11 is modest; it does not establish an optimum beyond the measured five-run uncertainty. Error bars show one SE, not a 95% confidence interval. Benchmark repetitions use newly created pools but are not guaranteed independent of host thermal or scheduler state.
