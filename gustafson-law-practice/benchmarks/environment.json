@@ -1,0 +1,27 @@
+{
+  "platform": "Windows-11-10.0.26300-SP0",
+  "python": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+  "processor": "Intel64 Family 6 Model 141 Stepping 1, GenuineIntel",
+  "logical_processors": 12,
+  "k_per_process": 500000,
+  "runs": 5,
+  "counts": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+  ],
+  "timer": "perf_counter",
+  "start_method": "spawn",
+  "timing_scope": "end-to-end including Pool spawn, IPC, reduction and shutdown",
+  "serial_reference": "same P independent quadratures, sequentially",
+  "utc_started": "2026-11-06T09:43:46Z"
+}

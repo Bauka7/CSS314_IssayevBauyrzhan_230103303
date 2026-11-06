@@ -1,0 +1,23 @@
+{
+  "alpha_unconstrained": 1.0056894651391688,
+  "alpha_observed_bounded": 1.0,
+  "constraint": "0 <= alpha <= 1",
+  "fit": "unweighted OLS of configuration means; fixed intercept",
+  "rmse": 0.3455265353122609,
+  "r_squared": -0.537705490167667,
+  "residuals": [
+    -0.7949014977852338,
+    -0.6260016401366351,
+    -0.46816713450193215,
+    -0.34119040727314676,
+    -0.1685546632253968,
+    -0.11171298773520522,
+    -0.07098279613051961,
+    -0.014913463886043643,
+    0.0023802720147654277,
+    -0.025032092955368124,
+    0.16285779216101015,
+    0.004343738633971528
+  ],
+  "interpretation": "effective penalty, not direct measurement of serial code; startup and contention included"
+}
